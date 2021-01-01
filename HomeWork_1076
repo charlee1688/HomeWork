@@ -1,0 +1,54 @@
+package HomeWork;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Homework_1076 {
+	
+//		*Task:Go to amazon  https://www.amazon.com/then  Go to Ebay   
+//		 * https://www.ebay.com/Enter a search term - 
+//		 * “shoes” Click on search button Verify title contains search term*/
+		
+	WebDriver driver;
+	
+	@Before
+	public void beforeMethod() {
+	WebDriverManager.chromedriver().setup();
+	driver = new ChromeDriver();
+	driver.get("https://www.amazon.com");
+	}
+	
+	@Test
+	public void test() {
+		driver.get("https://www.ebay.com");
+
+		//	Search shoe
+		driver.findElement(By.xpath("//*[@id=\"gh-ac\"]")).sendKeys("shoe");
+		
+		// verify search
+		driver.findElement(By.xpath("//*[@id=\"gh-btn\"]")).click();
+		driver.findElement(By.id("Search")).click();
+		
+		String search = driver.getTitle();
+		String verifySearch = driver.getTitle();
+		
+		if (search.equals(verifySearch)) {
+			System.out.println("PASS");
+		}else {
+			System.out.println("It's not your search");
+		}
+			
+	}
+		
+	@After
+	public void afterMethod() {
+		driver.close();
+	}
+
+}
