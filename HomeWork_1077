@@ -1,0 +1,95 @@
+package HomeWork;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HomeWork_1077 {
+
+	
+	/*
+	User story: As a user, I should be able to login VyTrack app.
+
+	test case1: login successfully
+	1. go to VyTrack login page
+	2. write username   data: storemanager52
+	3.write password           UserUser123
+	4. click login button
+	5.Verify that the user is on the homepage
+
+	test cases2: login invalid cridential
+	1. go to login page
+	2.write invalid usr name
+	3.write invalid password
+	4. click login bttn
+	5.verify that user see error message "Invalid user name or password."
+	*/
+	
+	WebDriver driver;
+
+	
+	@Before
+	public void beforeMethod() {
+	WebDriverManager.chromedriver().setup();
+	driver = new ChromeDriver();
+	driver.get("https://app.vytrack.com/user/login");
+	driver.manage().window().maximize();
+	}
+	
+	@Test
+	public void Test1() {
+	// user name
+	driver.findElement(By.id("id=\"prependedInput\"")).sendKeys("storemanager52");
+	driver.findElement(By.xpath("//*[@id=\"prependedInput\"]")).click();
+	
+	// password
+	driver.findElement(By.id("id=\"prependedInput2\"")).sendKeys("UserUser123");
+	driver.findElement(By.xpath("//*[@id=\"prependedInput2\"]")).click();
+	
+	// click login
+	driver.findElement(By.xpath("//*[@id=\"_submit\"]")).click();
+	
+	// verify home page
+	String Title = driver.getTitle();
+	if(Title.equals(driver.getTitle()))  {
+		System.out.println("PASS");
+		System.out.println("This is " + driver.getTitle()  );
+	} else {
+		System.out.println("FAIL");
+	}
+	}
+	
+	@Test
+	public void Test2() {
+
+	// user name
+	driver.findElement(By.id("id=\"prependedInput\"")).sendKeys("store52");
+	driver.findElement(By.xpath("//*[@id=\"prependedInput\"]")).click();
+		
+	// password
+	driver.findElement(By.id("id=\"prependedInput2\"")).sendKeys("User123");
+	driver.findElement(By.xpath("//*[@id=\"prependedInput2\"]")).click();
+		
+	// click login
+	driver.findElement(By.xpath("//*[@id=\"_submit\"]")).click();
+	
+	String Title = driver.getTitle();
+	if(Title.equals(driver.getTitle()))  {
+		System.out.println("PASS");
+		System.out.println("This is " + driver.getTitle()  );
+	} else {
+		System.out.println("FAIL");
+	}	
+		
+	}
+	
+	@After
+	public void afterMethod() {
+		driver.close();
+	}	
+}
