@@ -1,0 +1,116 @@
+package HomeWork;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HomeWork_1109 {
+
+	/*
+	Open browser
+	2. Go to https://ebay.com
+	3. Search for wooden spoon
+	4. Save the total number of results
+	5. Click on link All under the categories on the left menu
+	6. Verify that number of results is bigger than the number in step 4
+	7. Navigate back to previous research results page
+	8. Verify that wooden spoon is still displayed in the search box
+	9. Navigate back to home page
+	10. Verify that search box is blank
+	*/
+	
+	WebDriver driver;
+
+	@Before
+	public void beforeMethod() {
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		
+//		2. Go to https://ebay.com		
+		driver.get("https://www.ebay.com");
+		driver.manage().window().maximize();
+	
+	}
+  
+	@Test
+	public void test() throws InterruptedException {
+//		3. Search for wooden spoon
+		WebElement searchInput = driver.findElement(By.id("gh-ac"));
+		String searchTerm = "wooden spoon";
+		searchInput.sendKeys(searchTerm, Keys.ENTER);
+		
+//		4. Save the total number of results
+		WebElement total = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[1]/div/div[2]/div[1]/div[1]/h1"));
+		System.out.println(total.getText());			
+		
+//		5. Click on link All under the categories on the left menu
+		WebElement CheckBox1 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[1]/div/a/div/span/input"));
+		Boolean isSelected1 = CheckBox1.isSelected();
+			CheckBox1.click();
+      Thread.sleep(3000);
+		WebElement CheckBox2 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[2]/div/a/div/span/input"));
+		Boolean isSelected2 = CheckBox2.isSelected();
+			CheckBox2.click();
+			Thread.sleep(3000);
+		WebElement CheckBox3 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[3]/div/a/div/span/input"));
+		Boolean isSelected3 = CheckBox3.isSelected();
+			CheckBox3.click();
+			Thread.sleep(3000);
+		WebElement CheckBox4 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[4]/div/a/div/span/input"));
+		Boolean isSelected4 = CheckBox4.isSelected();
+			CheckBox4.click();
+			Thread.sleep(3000);
+		WebElement CheckBox5 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[5]/div/a/div/span/input"));
+		Boolean isSelected5 = CheckBox5.isSelected();
+			CheckBox5.click();
+			Thread.sleep(3000);
+		WebElement CheckBox6 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[6]/div/a/div/span/input"));
+		Boolean isSelected6 = CheckBox6.isSelected();
+			CheckBox6.click();
+			Thread.sleep(3000);								
+		WebElement CheckBox7 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[7]/div/a/div/span/input"));
+		Boolean isSelected7 = CheckBox7.isSelected();
+			CheckBox7.click();
+			Thread.sleep(3000);
+		WebElement CheckBox8 = driver.findElement(By.xpath("//*[@id=\"x-refine__group_1__0\"]/ul/li[8]/div/a/div/span/input"));
+		Boolean isSelected8 = CheckBox8.isSelected();
+			CheckBox8.click();
+			Thread.sleep(3000);	
+		
+		
+//		6. Verify that number of results is bigger than the number in step 4
+		WebElement total2 = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div[1]/div/div[2]/div[1]/div[1]/h1"));
+		System.out.println(total2.getText());
+			
+//		7. Navigate back to previous research results page
+		driver.navigate().back();
+		
+//		8. Verify that wooden spoon is still displayed in the search box
+		
+		String searchText = "wooden spoon";
+		if(searchText.equals(searchTerm)) {
+			System.out.println("Same search");
+		}else {
+			System.out.println("Nothing to search");
+		}
+		
+//		9. Navigate back to home page
+		driver.get("https://www.ebay.com");
+		
+//		10. Verify that search box is blank
+		
+		if(searchText.equals(searchTerm)) {
+			System.out.println("Nothing to search");
+		}else {
+			System.out.println("Same search");
+		}
+		
+	}
+	
+}
