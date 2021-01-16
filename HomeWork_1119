@@ -1,0 +1,82 @@
+package HomeWork;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class HomeWork_1119 {
+
+//	1. Navigate to URL : https://www.seleniumeasy.com/test/javascript-alert-box-demo.html
+//	2. Scroll down to third Alert box ( Click for promot Box )  click the the button 
+//	   ( use Actions class ) 
+//	3. pupop will display and enter the message in box ( your name )  click OK button
+//	4. After click OK button, you will see message below EX : You have entered 'Techcircle' !
+//	   Verify use ( asserttion ) Assert message has displyed.
+//	   Also i would like to see other assertion is : before message call : Click below button 
+//	   for prompt box. is different than new message, Expected TRUE. 
+	   
+	WebDriver driver;
+
+	@Before
+	public void beforeMethod() {
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.get("https://www.seleniumeasy.com/test/javascript-alert-box-demo.html");
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	}
+
+	@Test
+	public void test() throws InterruptedException {
+//		2. Scroll down to third Alert box ( Click for promot Box )  click the the button 
+//		   ( use Actions class ) 
+		
+		driver.findElement(By.xpath("//*[@id=\"easycont\"]/div/div[2]/div[3]/div[2]/button")).click();
+		System.out.println(driver.switchTo().alert().getText());
+
+//		3. pupop will display and enter the message in box ( your name )  click OK button
+
+		driver.switchTo().alert().sendKeys("Techcircle");
+		driver.switchTo().alert().accept();
+		Thread.sleep(4000);
+		
+//		4. After click OK button, you will see message below EX : You have entered 'Techcircle' !
+//		   Verify use ( asserttion ) Assert message has displyed.
+//		   Also i would like to see other assertion is : before message call : Click below button 
+//		   for prompt box. is different than new message, Expected TRUE. 
+		
+		WebElement msg = driver.findElement(By.id("prompt-demo"));
+		Assert.assertTrue(msg.isDisplayed());
+		System.out.println(msg.getText());
+		
+//		after
+		driver.findElement(By.xpath("//*[@id=\"easycont\"]/div/div[2]/div[3]/div[2]/button")).click();
+		System.out.println(driver.switchTo().alert().getText());
+		driver.switchTo().alert().accept();
+		WebElement Empty = driver.findElement(By.id("prompt-demo"));
+		Assert.assertTrue(Empty.isDisplayed());
+		System.out.println(Empty.getText());
+		
+		Assert.assertEquals(msg, Empty);
+		
+		if(msg.equals(Empty)) {
+			System.out.println("True");
+		}else {
+			System.out.println("False");
+		}
+		
+	}
+	 
+	@After
+	public void after() {
+		driver.close();
+	}
+
+}
